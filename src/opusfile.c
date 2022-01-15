@@ -25,7 +25,9 @@
 #include <limits.h>
 #include <string.h>
 #include <math.h>
-
+#if defined(_WIN64) && (defined(__x86_64__) || defined(_M_X64))
+#include <xmmintrin.h>
+#endif
 #include "opusfile.h"
 
 /*This implementation is largely based off of libvorbisfile.
@@ -3168,8 +3170,11 @@ int op_read_float_stereo(OggOpusFile *_of,float *_pcm,int _buf_size){
 
 #else
 
-# if defined(OP_HAVE_LRINTF)
-#  include <math.h>
+# if defined(_WIN64) && (defined(__x86_64__) || defined(_M_X64))
+  static __inline long int op_float2int(float _x) {
+    return _mm_cvtss_si32(_mm_load_ss(&_x));
+  }
+# elif defined(OP_HAVE_LRINTF)
 #  define op_float2int(_x) (lrintf(_x))
 # else
 #  define op_float2int(_x) ((int)((_x)+((_x)<0?-0.5F:0.5F)))
