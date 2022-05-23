@@ -27,8 +27,9 @@ function(get_package_version PACKAGE_VERSION PROJECT_VERSION)
                        OPUSFILE_PACKAGE_VERSION)
       message(STATUS "Opus package version from git repo: ${OPUSFILE_PACKAGE_VERSION}")
     endif()
+  endif()
 
-  elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/package_version"
+  if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/package_version"
          AND NOT OPUSFILE_PACKAGE_VERSION)
     # Not a git repo, lets' try to parse it from package_version file if exists
     file(STRINGS package_version OPUSFILE_PACKAGE_VERSION
