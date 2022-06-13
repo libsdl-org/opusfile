@@ -294,11 +294,12 @@ if(NOT OP_DISABLE_DOCS)
 
   doxygen_add_docs(doxygen "${CMAKE_CURRENT_SOURCE_DIR}/include/opusfile.h" ALL USE_STAMP_FILE)
 endif()
-
+if(0) # when vendoring opusfile in SDL_mixer, libogg is also vendored and thus missing from this the OpusFileTargets export set
 install(EXPORT OpusFileTargets
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/opusfile"
   NAMESPACE OpusFile::
 )
+endif()
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/OpusFileConfig.cmake.in"
