@@ -54,6 +54,12 @@ set_target_properties(opusfile PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION ${PROJECT_VERSION_MAJOR}
 )
+if(WIN32 AND BUILD_SHARED_LIBS)
+    # FIXME: keep soversion in sync with autotools
+    set_property(TARGET opusfile PROPERTY RUNTIME_OUTPUT_NAME "opusfile-0")
+    # Requires CMake 3.27, so not sufficient
+    set_property(TARGET opusfile PROPERTY DLL_NAME_WITH_SOVERSION FALSE)
+endif()
 target_include_directories(opusfile
   PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
