@@ -304,7 +304,11 @@ void *op_fopen(OpusFileCallbacks *_cb,const char *_path,const char *_mode){
 
 void *op_fdopen(OpusFileCallbacks *_cb,int _fd,const char *_mode){
   FILE *fp;
+#ifdef _WIN32
+  fp=_fdopen(_fd,_mode);
+#else
   fp=fdopen(_fd,_mode);
+#endif
   if(fp!=NULL)*_cb=*op_get_file_callbacks(fp);
   return fp;
 }
