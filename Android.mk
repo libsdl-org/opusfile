@@ -10,13 +10,11 @@ LOCAL_C_INCLUDES := \
 LOCAL_CFLAGS := -DOPUS_BUILD -DHAVE_LRINTF -DFLOATING_POINT -DFLOAT_APPROX -DUSE_ALLOCA
 
 LOCAL_SRC_FILES += \
-    src/http.c \
     src/info.c \
     src/internal.c \
     src/opusfile.c \
-    src/stream.c \
-    src/wincerts.c
+    src/stream.c
 
-LOCAL_SHARED_LIBRARIES := opus
+LOCAL_SHARED_LIBRARIES := opus ogg
 
 include $(BUILD_STATIC_LIBRARY)
